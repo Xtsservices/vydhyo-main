@@ -1,8 +1,7 @@
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const logger = require('../utils/logger');
-
-const JWT_SECRET_KEY = process.env.JWT_SECRET;
+const { verifyToken, verifyRefreshToken } = require("../middlewares/authMiddleware");
 
 const proxyRequest = async (req, res, targetUrl) => {
   try {
@@ -10,14 +9,16 @@ const proxyRequest = async (req, res, targetUrl) => {
     // CASE 1: Token is present - validate it
     if (token) {
       try {
-        const decoded = jwt.verify(token, JWT_SECRET_KEY);
-        req.user = decoded;
-      } catch (err) {
-        return res.status(401).json({ error: "Invalid or expired token..........." });
+        verifyToken(req, res, () => {
+          // Token is valid, proceed with                                                                                                                                                                                        h the request
+          logger.info("proxy.js : proxyRequest : Token is valid, proceeding with the request...");
+        })
+      } catch (err) {    
+        return res.status(403).json({ message: "Invalid or expired token...! "});     
       }
     } 
     // CASE 2: Token not present, use email/password to get one
-    else if (req.body?.email && req.body?.password) {
+    else if (req.body?.mobile) {
       logger.info("proxy.js : proxyRequest : No token, attempting login with email & password...");
       try {
         const response = await axios({
@@ -26,8 +27,7 @@ const proxyRequest = async (req, res, targetUrl) => {
           data: req.rawBody,
           headers: req.headers,
         });
-
-        token = response.data.token;
+        return res.status(response.status).json(response.data);
       } catch (loginErr) {
         return res.status(401).json({ error: "Invalid credentials", details: loginErr?.response?.data });
       }
@@ -48,10 +48,10 @@ const proxyRequest = async (req, res, targetUrl) => {
       },
     });
 
-    res.status(response.status).json(response.data);
+    return res.status(response.status).json(response.data);
   } catch (err) {
     const status = err.response?.status || 500;
-    const message = err.response?.data || { error: "Internal Server Error", details: err.message };
+    const message = err.response?.data || { error: "Internal Server Error...", details: err.message };
     logger.error(`proxy.js : proxyRequest : Error : ${err.response?.data}`);
     res.status(status).json(message);
   }
