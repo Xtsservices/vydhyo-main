@@ -1,10 +1,29 @@
 const axios = require("axios");
-const jwt = require("jsonwebtoken");
 const logger = require('../utils/logger');
-const { verifyToken, verifyRefreshToken } = require("../middlewares/authMiddleware");
+const { verifyToken } = require("../middlewares/authMiddleware");
+const openRouter = require("../utils/openRoutes");
+
+const isOpenRoute = (req) => {
+  return openRoutes.some(route => {
+    return route.method === req.method && route.path.test(req.path);
+  });
+};
 
 const proxyRequest = async (req, res, targetUrl) => {
   try {
+     // Check if route is open
+     if (isOpenRoute(req)) {
+      logger.info(`proxy.js : proxyRequest : Open route - skipping token verification: ${req.path}`);
+      const response = await axios({
+        method: req.method,
+        url: `${targetUrl}${req.originalUrl}`,
+        data: req.rawBody,
+        headers: req.headers,
+      });
+      return res.status(response.status).json(response.data);
+    }
+
+    // Auth logic for protected routes
     let token = req.headers["authorization"]?.split(" ")[1];
     // CASE 1: Token is present - validate it
     if (token) {
