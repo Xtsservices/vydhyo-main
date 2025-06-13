@@ -51,7 +51,7 @@ const proxyRequest = async (req, res, targetUrl) => {
         });
         return res.status(response.status).json(response.data);
       } catch (loginErr) {
-        return res.status(401).json({ error: "Invalid credentials", details: loginErr?.response?.data });
+        return res.status(401).json({ error: "Something went wrong.", details: loginErr?.response?.data });
       }
     }
     // CASE 3: Neither token nor credentials
@@ -118,15 +118,8 @@ const buildFormData = (req) => {
           fs.unlink(file.path, (err) => {
             if (err) {
               console.error(`Error deleting file ${file.path}:`, err.message);
-            } else {
-              console.log(`Temp file deleted: ${file.path}`);
             }
           });
-        });
-
-        // (Optional) catch stream errors
-        stream.on("error", (err) => {
-          console.error(`Stream error for ${file.path}:`, err.message);
         });
       }
     }
