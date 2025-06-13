@@ -51,7 +51,7 @@ const proxyRequest = async (req, res, targetUrl) => {
         });
         return res.status(response.status).json(response.data);
       } catch (loginErr) {
-        return res.status(401).json({ error: "Something went wrong.", details: loginErr?.response?.data });
+        return res.status(401).json({ error: "Something went wrong.", details: loginErr });
       }
     }
     // CASE 3: Neither token nor credentials
