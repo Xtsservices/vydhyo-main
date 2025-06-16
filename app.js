@@ -14,7 +14,7 @@ const catalogueRoutes = require("./routes/catalogue");
 
 
 const upload = multer({ dest: "uploads/" });
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: "2mb", verify: (req, res, buf) => { req.rawBody = buf; } }));
 
 // This handles all incoming multipart/form-data requests
