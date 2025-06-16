@@ -1,4 +1,6 @@
+require('dotenv').config();
 const jwt = require("jsonwebtoken");
+const logger = require('../utils/logger');
 
 const verifyToken = (req, res, next) => {
   try {
@@ -12,7 +14,7 @@ const verifyToken = (req, res, next) => {
     next();
   } catch (err) {
     verifyRefreshToken(req, res, () => {
-      console.log("proxy.js : proxyRequest : Token is valid, proceeding with the request...");
+      logger.info("proxy.js : proxyRequest : Token is valid, proceeding with the request...");
     });
   }
 };
