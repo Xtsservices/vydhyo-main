@@ -41,7 +41,7 @@ const proxyRequest = async (req, res, targetUrl) => {
     }
     // CASE 2: Token not present, use email/password to get one
     else if (req.body?.mobile) {
-      logger.info("proxy.js : proxyRequest : No token, attempting login with email & password...");
+      logger.info("proxy.js : proxyRequest : No token, attempting signin...");
       try {
         const response = await axios({
           method: req.method,
