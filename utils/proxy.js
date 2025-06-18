@@ -12,7 +12,7 @@ const isOpenRoute = (req) => {
 };
 
 const proxyRequest = async (req, res, targetUrl) => {
-  console.log(`proxy.js : proxyRequest : Request received for ${req.body} ${req?.files}`);
+  console.log(`proxy.js : proxyRequest : Request received for ${JSON.stringify(req.body)} ${JSON.stringify(req?.files)}`);
   try {
     const isMultipart = req.is("multipart/form-data");
     // Check if route is open
