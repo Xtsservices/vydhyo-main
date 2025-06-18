@@ -38,6 +38,8 @@ app.use("/finance", financeRoutes);
 app.use("/reports", reportsRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/catalogue", catalogueRoutes);
+app.use("/admin", userRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
