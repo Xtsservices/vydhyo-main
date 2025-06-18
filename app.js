@@ -1,9 +1,10 @@
 require("dotenv").config();
-const fs = require('fs');
 const express = require("express");
 const app = express();
+const cors = require('cors');
 const logger = require("./utils/logger");
 const multer = require("multer");
+
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
@@ -14,9 +15,9 @@ const catalogueRoutes = require("./routes/catalogue");
 
 
 const upload = multer({ dest: "uploads/" });
+app.use(cors());
+app.use(express.json({ limit: "15mb", verify: (req, res, buf) => { req.rawBody = buf; } }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({ limit: "2mb", verify: (req, res, buf) => { req.rawBody = buf; } }));
-
 // This handles all incoming multipart/form-data requests
 app.use((req, res, next) => {
   if (req.is("multipart/form-data")) {
