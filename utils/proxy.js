@@ -79,7 +79,7 @@ const proxyRequest = async (req, res, targetUrl) => {
   } catch (err) {
     const status = err.response?.status || 500;
     const message = err.response?.data || { error: "Internal Server Error...", details: err.message };
-    logger.error(`proxy.js : proxyRequest : Error : ${err.response?.data}`);
+    logger.error(`proxy.js : proxyRequest : Error : ${err}`);
     res.status(status).json(message);
   }
 };
