@@ -39,6 +39,8 @@ app.use("/reports", reportsRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/catalogue", catalogueRoutes);
 app.use("/admin", userRoutes);
+app.use("/doctor", userRoutes);
+
 
 
 const PORT = process.env.PORT || 3000;
