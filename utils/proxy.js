@@ -5,14 +5,13 @@ const fs = require("fs");
 const { verifyToken } = require("../middlewares/authMiddleware");
 const openRoutes = require("../utils/openRoutes");
 
-const isOpenRoute = (req) => {
+const isOpenRoute = (req) => {  
   return openRoutes.some(route => {
-    return route.method === req.method && route.path.test(req.path);
+    return route.method === req.method && route.path.test(req.originalUrl);
   });
 };
 
 const proxyRequest = async (req, res, targetUrl) => {
-  console.log(`proxy.js : proxyRequest : Request received for ${JSON.stringify(req.body)} ${JSON.stringify(req?.files)}`);
   try {
     const isMultipart = req.is("multipart/form-data");
     // Check if route is open
@@ -118,7 +117,7 @@ const buildFormData = (req) => {
         stream.on("end", () => {
           fs.unlink(file.path, (err) => {
             if (err) {
-              console.error(`Error deleting file ${file.path}:`, err.message);
+              logger.error(`Error deleting file ${file.path}:`, err.message);
             }
           });
         });
