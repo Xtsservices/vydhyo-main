@@ -36,7 +36,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/finance", financeRoutes);
 app.use("/reports", reportsRoutes);
-app.use("/appointments", appointmentsRoutes);
+app.use("/appointment", appointmentsRoutes);
 app.use("/catalogue", catalogueRoutes);
 app.use("/admin", userRoutes);
 app.use("/doctor", userRoutes);
