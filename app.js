@@ -40,6 +40,7 @@ app.use("/appointment", appointmentsRoutes);
 app.use("/catalogue", catalogueRoutes);
 app.use("/admin", userRoutes);
 app.use("/doctor", userRoutes);
+app.use("/receptionist", userRoutes);
 
 
 
