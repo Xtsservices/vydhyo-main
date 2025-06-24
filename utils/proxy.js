@@ -58,19 +58,20 @@ const proxyRequest = async (req, res, targetUrl) => {
     else {
       return res.status(401).json({ error: "Missing token or credentials" });
     }
+
     // Forward the original request with the token added to headers
-    const data = isMultipart ? buildFormData(req) : req.rawBody;
+    const form = buildFormData(req);    
     const headers = {
-      ...req.headers,
-      ...req.user,
+      ...form.getHeaders(), // includes multipart boundary
       authorization: `Bearer ${token}`,
-      ...(isMultipart ? data.getHeaders() : {})
+      ...req.user
     };
     const response = await axios({
       method: req.method,
       url: `${targetUrl}${req.originalUrl}`,
-      data,
+      data: form, 
       headers,
+      timeout: 30000,
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
     });
@@ -80,7 +81,7 @@ const proxyRequest = async (req, res, targetUrl) => {
     const status = err.response?.status || 500;
     const message = err.response?.data || { error: "Internal Server Error...", details: err.message };
     logger.error(`proxy.js : proxyRequest : Error : ${err}`);
-    res.status(status).json({message, details: err.message || "An error occurred while processing your request."});
+    res.status(status).json(message);
   }
 };
 
