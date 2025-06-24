@@ -58,24 +58,53 @@ const proxyRequest = async (req, res, targetUrl) => {
     else {
       return res.status(401).json({ error: "Missing token or credentials" });
     }
-    // Forward the original request with the token added to headers
-    const data = isMultipart ? buildFormData(req) : req.rawBody;
+
+    const isMultipartData = req.headers['content-type']?.includes('multipart/form-data');
+    const formData = isMultipartData ? buildFormData(req) : null;
+    const data = isMultipartData ? formData : req.rawBody;
+    
     const headers = {
-      ...req.headers,
-      ...req.user,
+      ...req.headers, // be cautious: this may include content-length from client, which might mismatch
       authorization: `Bearer ${token}`,
-      ...(isMultipart ? data.getHeaders() : {})
+      ...(req.user && { ...req.user }), // include only if defined
+      ...(isMultipartData ? formData.getHeaders() : { 'Content-Type': 'application/json' }), // ensure Content-Type is explicitly set
     };
+    
+    // Optionally remove conflicting headers
+    delete headers['content-length']; // Let axios calculate it automatically
+    delete headers['host']; // Prevent leaking client host info
+    
     const response = await axios({
       method: req.method,
       url: `${targetUrl}${req.originalUrl}`,
       data,
       headers,
+      timeout: 30000,
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
     });
-
+    
     return res.status(response.status).json(response.data);
+    
+    // Forward the original request with the token added to headers
+    // const data = isMultipart ? buildFormData(req) : req.rawBody;
+    // const headers = {
+    //   ...req.headers,
+    //   ...req.user,
+    //   authorization: `Bearer ${token}`,
+    //   ...(isMultipart ? data.getHeaders() : {})
+    // };
+    // const response = await axios({
+    //   method: req.method,
+    //   url: `${targetUrl}${req.originalUrl}`,
+    //   data,
+    //   headers,
+    //   maxContentLength: Infinity,
+    //   maxBodyLength: Infinity,
+    // });
+
+    // return res.status(response.status).json(response.data);
+
   } catch (err) {
     const status = err.response?.status || 500;
     const message = err.response?.data || { error: "Internal Server Error...", details: err.message };
