@@ -13,6 +13,7 @@ const reportsRoutes = require("./routes/reports");
 const appointmentsRoutes = require("./routes/appointments");
 const catalogueRoutes = require("./routes/catalogue");
  const superAdminRoutes = require("./routes/superadmin");
+ const doctordashbaordRoutes = require("./routes/doctordashbaord");
 
 
 
@@ -44,6 +45,8 @@ app.use("/admin", userRoutes);
 app.use("/doctor", userRoutes);
 app.use("/receptionist", userRoutes);
 app.use("/superAdmin", superAdminRoutes);
+app.use("/doctorDashboard", doctordashbaordRoutes);
+
 
 
 
