@@ -49,6 +49,7 @@ app.use("/receptionist", userRoutes);
 app.use("/superAdmin", superAdminRoutes);
 app.use("/doctorDashboard", doctordashbaordRoutes);
 app.use("/address", addressRoutes);
+app.use("/pharmacy", userRoutes);
 app.use("/lab", labRoutes);
 
 
