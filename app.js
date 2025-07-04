@@ -15,7 +15,7 @@ const catalogueRoutes = require("./routes/catalogue");
  const superAdminRoutes = require("./routes/superadmin");
  const doctordashbaordRoutes = require("./routes/doctordashbaord");
 const addressRoutes = require("./routes/address");
-
+const labRoutes = require("./routes/lab")
 
 
 
@@ -49,6 +49,7 @@ app.use("/receptionist", userRoutes);
 app.use("/superAdmin", superAdminRoutes);
 app.use("/doctorDashboard", doctordashbaordRoutes);
 app.use("/address", addressRoutes);
+app.use("/lab", labRoutes);
 
 
 
