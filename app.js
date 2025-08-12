@@ -20,7 +20,15 @@ const labRoutes = require("./routes/lab")
 
 
 const upload = multer({ dest: "uploads/" });
-app.use(cors());
+// app.use(cors());
+
+app.use(cors({
+  origin: ["https://vydhyo.com"], // your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
 
 app.use(express.json({ limit: "15mb", verify: (req, res, buf) => { req.rawBody = buf; } }));
 app.use(express.urlencoded({ extended: true }));
