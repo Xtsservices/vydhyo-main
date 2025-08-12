@@ -20,8 +20,7 @@ const labRoutes = require("./routes/lab")
 
 
 const upload = multer({ dest: "uploads/" });
-// app.use(cors());
-app.use(cors({ origin: "*" }));
+app.use(cors());
 
 app.use(express.json({ limit: "15mb", verify: (req, res, buf) => { req.rawBody = buf; } }));
 app.use(express.urlencoded({ extended: true }));
