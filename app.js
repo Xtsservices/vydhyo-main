@@ -22,8 +22,9 @@ const labRoutes = require("./routes/lab")
 const upload = multer({ dest: "uploads/" });
 // app.use(cors());
 
-app.use(cors({
-  origin: ["https://vydhyo.com"], // your frontend domain
+
+app.options("*", cors({
+  origin: ["https://vydhyo.com"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
