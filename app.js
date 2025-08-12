@@ -24,7 +24,7 @@ const upload = multer({ dest: "uploads/" });
 
 
 app.options("*", cors({
-  origin: ["https://vydhyo.com"],
+   origin: ["https://vydhyo.com", "http://localhost:5173"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
