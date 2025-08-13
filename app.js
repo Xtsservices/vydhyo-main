@@ -23,13 +23,14 @@ const upload = multer({ dest: "uploads/" });
 // app.use(cors());
 
 
-app.options("*", cors({
-   origin: ["https://vydhyo.com", "http://localhost:5173"],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
+// app.options("*", cors({
+//    origin: ["https://vydhyo.com", "http://localhost:5173"],
+//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true
+// }));
 
+app.use(cors({ origin: "*" }));
 
 app.use(express.json({ limit: "15mb", verify: (req, res, buf) => { req.rawBody = buf; } }));
 app.use(express.urlencoded({ extended: true }));
