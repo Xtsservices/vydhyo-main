@@ -16,6 +16,9 @@ const catalogueRoutes = require("./routes/catalogue");
  const doctordashbaordRoutes = require("./routes/doctordashbaord");
 const addressRoutes = require("./routes/address");
 const labRoutes = require("./routes/lab")
+const whatsappRoutes = require("./routes/whatsapp")
+const whatsappbooking = require("./routes/whatsappbooking")
+
 
 
 
@@ -62,6 +65,10 @@ app.use("/doctorDashboard", doctordashbaordRoutes);
 app.use("/address", addressRoutes);
 app.use("/pharmacy", userRoutes);
 app.use("/lab", labRoutes);
+app.use("/whatsapp", whatsappRoutes);
+app.use("/whatsappbooking", whatsappbooking);
+
+
 
 
 

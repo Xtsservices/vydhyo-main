@@ -16,6 +16,7 @@ const proxyRequest = async (req, res, targetUrl) => {
     const isMultipart = req.is("multipart/form-data");
     // Check if route is open
     if (isOpenRoute(req)) {
+      console.log(`proxy.js : proxyRequest : Open route - skipping token verification: ${req.path}`, `${targetUrl}${req.originalUrl}`);
       logger.info(`proxy.js : proxyRequest : Open route - skipping token verification: ${req.path}`);
       const response = await axios({
         method: req.method,
