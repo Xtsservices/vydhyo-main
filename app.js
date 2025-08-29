@@ -19,7 +19,7 @@ const labRoutes = require("./routes/lab")
 const whatsappRoutes = require("./routes/whatsapp")
 const whatsappbooking = require("./routes/whatsappbooking")
 
-
+const whatsappbot = require("./routes/whatsappbot")
 
 
 const upload = multer({ dest: "uploads/" });
@@ -67,6 +67,7 @@ app.use("/pharmacy", userRoutes);
 app.use("/lab", labRoutes);
 app.use("/whatsapp", whatsappRoutes);
 app.use("/whatsappbooking", whatsappbooking);
+app.use("/whatsappbot", whatsappbot);
 
 
 
