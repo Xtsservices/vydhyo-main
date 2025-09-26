@@ -64,6 +64,7 @@ app.use("/superAdmin", superAdminRoutes);
 app.use("/doctorDashboard", doctordashbaordRoutes);
 app.use("/address", addressRoutes);
 app.use("/pharmacy", userRoutes);
+app.use("/template", userRoutes);
 app.use("/lab", labRoutes);
 app.use("/whatsapp", whatsappRoutes);
 app.use("/whatsappbooking", whatsappbooking);
