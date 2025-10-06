@@ -73,8 +73,21 @@ app.use("/whatsappbot", whatsappbot);
 
 
 
+// Patient app versions
+app.get("/patient/app-version", (req, res) => {
+  res.json({
+    androidMinVersionCode: 6,
+    iosMinVersionCode: 1,
+  });
+});
 
-
+// Doctor app versions
+app.get("/doctor/app-version", (req, res) => {
+  res.json({
+    androidMinVersionCode: 14,
+    iosMinVersionCode: 1,
+  });
+});
 
 
 const PORT = process.env.PORT || 3000;
