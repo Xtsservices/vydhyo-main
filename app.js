@@ -82,7 +82,7 @@ app.get("/patient/app-version", (req, res) => {
 });
 
 // Doctor app versions
-app.get("/doctor/app-version", (req, res) => {
+app.get("/doctorApp/app-version", (req, res) => {
   res.json({
     androidMinVersionCode: 14,
     iosMinVersionCode: 1,
