@@ -76,7 +76,7 @@ app.use("/whatsappbot", whatsappbot);
 // Patient app versions
 app.get("/patient/app-version", (req, res) => {
   res.json({
-    androidMinVersionCode: 10,
+    androidMinVersionCode: 11,
     iosMinVersionCode: 1,
   });
 });
